@@ -1,0 +1,37 @@
+.timer-container{
+    width: 899px;
+    height: 260px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    box-shadow:0 60px 0 -50px  rgba(0, 0, 0, .2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.period-box{
+    display: flex;
+
+    width: 40%;
+    height: 75%;
+
+    flex-direction: row;
+
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button{
+
+    position: relative;
+
+}
+
+.buttonList{
+    width:25%;
+
+    display: flex;
+
+    justify-content: space-between;
+}

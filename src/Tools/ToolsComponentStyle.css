@@ -1,0 +1,19 @@
+.tools-container{
+    display: flex;
+    width: 75%;
+    height:15%;
+    justify-content: space-between;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.menu-icon{
+    /*background: url("../../public/menu_icon.svg") no-repeat;*/
+    /*background-size: cover;*/
+    /*width: 30px ;*/
+    /*height: 30px;*/
+}
+
+.menu{
+    margin-right: 1em;
+}

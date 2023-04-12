@@ -1,0 +1,25 @@
+.period-container{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+
+    font-family: Arial sans-serif;
+
+}
+
+.time-text{
+
+    font-size: 80px;
+    font-weight: 500;
+
+}
+
+.description-text{
+    font-size: 20px;
+
+    color: #0000006E;
+
+}
