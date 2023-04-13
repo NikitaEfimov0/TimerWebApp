@@ -32,14 +32,10 @@ export default function TimerComponent(){
 
     const [isEndOfTime, setIsEndOfTime] = useState(false)
 
-    const [selectedDate, setSelectedDate] = React.useState<Date | null>(
-      new Date(),
-    );
+    const [isInvalid, setIsInvalid] = useState(false)
 
-    const handleDateChange = (date: Date | null) => {
-      setSelectedDate(date);
-    };
 
+    const [triesToRunWhenInvalid, setTriesToRunWhenInvalid] = useState(false);
 
 
 
@@ -47,6 +43,7 @@ export default function TimerComponent(){
       setTime(0)
       setStart(false)
       setPause(false)
+      setIsInvalid(false)
     }, [typeOfTimer])
 
     useEffect(()=>{
@@ -99,11 +96,16 @@ export default function TimerComponent(){
 
 
     const onTimerValueChanged = (event: any) =>{
-        const timeArray = event.target.value.split(":");
-        const hours = parseInt(timeArray[0]);
-        const minutes = parseInt(timeArray[1]);
-        const seconds = (hours * 60 + minutes) * 60;
-        setTime(seconds)
+
+        const reg = new RegExp("^([01]\\d|2[0-3]):([0-5]\\d)");
+        setIsInvalid(!reg.test(event.target.value));
+        if(!isInvalid) {
+          const timeArray = event.target.value.split(":");
+          const hours = parseInt(timeArray[0]);
+          const minutes = parseInt(timeArray[1]);
+          const seconds = (hours * 60 + minutes) * 60;
+          setTime(seconds ? seconds : 0)
+        }
 
     }
 
@@ -111,8 +113,15 @@ export default function TimerComponent(){
 
     const playButtonHandler = () =>{
 
+      if(!isInvalid) {
+
         setStart(true);
         setPause(false);
+      }
+
+      else{
+        setTriesToRunWhenInvalid(true);
+      }
 
 
         // initTimer()
@@ -134,6 +143,10 @@ export default function TimerComponent(){
 
 
     }
+
+  function handleCloseError (){
+      setTriesToRunWhenInvalid(false);
+  }
 
   function handleClose () {
     setIsEndOfTime(false)
@@ -161,12 +174,12 @@ export default function TimerComponent(){
               <div className={"buttonList"}>
               <TextField
                 type={"text"}
-                label={"ex. 00:00"}
+                label={"hh:mm"}
+                variant={"outlined"}
                 defaultValue={"00:00"}
+                error={isInvalid}
                 onChange={(event)=>onTimerValueChanged(event)}
-                InputLabelProps={{
-                  shrink: true,
-                }}
+                style = {{width: 100}}
               />
                 <Fab color="secondary" aria-label="add" size={"large"} className={"button"} onClick={playButtonHandler}>
                   <PlayArrowIcon/>
@@ -189,8 +202,14 @@ export default function TimerComponent(){
                 </div>}
 
           <Snackbar open={isEndOfTime} autoHideDuration={6000} onClose={handleClose}>
-            <MuiAlert onClose={handleClose} severity="error" elevation={6} variant="filled">
+            <MuiAlert onClose={handleClose} severity="error" elevation={6} variant="outlined">
               Time is over!
+            </MuiAlert>
+          </Snackbar>
+
+          <Snackbar open={triesToRunWhenInvalid} autoHideDuration={6000} onClose={handleCloseError}>
+            <MuiAlert onClose={handleCloseError} severity="error" elevation={6} variant="filled">
+              Your input time must be like hh:mm!
             </MuiAlert>
           </Snackbar>
 
