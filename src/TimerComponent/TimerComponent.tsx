@@ -160,7 +160,8 @@ export default function TimerComponent(){
             {!start?(typeOfTimer === 1?
               <div className={"buttonList"}>
               <TextField
-                type={"time"}
+                type={"text"}
+                label={"ex. 00:00"}
                 defaultValue={"00:00"}
                 onChange={(event)=>onTimerValueChanged(event)}
                 InputLabelProps={{
