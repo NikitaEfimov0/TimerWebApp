@@ -98,12 +98,14 @@ export default function TimerComponent(){
     const onTimerValueChanged = (event: any) =>{
 
         const reg = new RegExp("^([01]\\d|2[0-3]):([0-5]\\d)");
-        setIsInvalid(!reg.test(event.target.value));
-        if(!isInvalid) {
+        const res = reg.test(event.target.value)
+        setIsInvalid(!res);
+        if(res) {
           const timeArray = event.target.value.split(":");
           const hours = parseInt(timeArray[0]);
           const minutes = parseInt(timeArray[1]);
           const seconds = (hours * 60 + minutes) * 60;
+          console.log(seconds)
           setTime(seconds ? seconds : 0)
         }
 
